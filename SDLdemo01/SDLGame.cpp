@@ -9,6 +9,7 @@ SDLGame::SDLGame() {
 
 	sprite = nullptr;
 	mainPlayer = nullptr;
+	enemySprite = nullptr;
 }
 
 
@@ -19,10 +20,8 @@ SDLGame::~SDLGame() {
 
 	delete sprite;
 	delete mainPlayer;
-
-	// What else have we allocated??!!??
-
-
+	delete enemySprite;
+	delete bulletSprite;
 }
 
 void SDLGame::initialise() {
@@ -63,21 +62,24 @@ void SDLGame::initialise() {
 
 	// -----------------------
 
-
+	//player sprite initialisation
 	sprite = new Sprite();
 	sprite->initialise(gameRenderer, "Assets\\Images\\playerSprite.png");
-
+	//v
 	mainPlayer = new Player();
-	mainPlayer->initialise(sprite, 100, 100, 100.0f);
+	mainPlayer->initialise(sprite, 375, 510, 100.0f);
 
-	// Recipe 5 & 9 - instantiate something to collide with and shoot
+	//enemy sprite initialisation
+	sprite = new Sprite();
+	sprite->initialise(gameRenderer, "Assets\\Images\\enemySprite.png");
+	//v
 	enemySprite = new Enemy();
 	enemySprite->initialise(sprite, 600, 400);
 
-	// Recipe 9 - Bullets
+	//bullet sprite initialisation
 	bulletSprite = new Sprite();
 	bulletSprite->initialise(gameRenderer, "Assets\\Images\\bullet.png");
-	
+	//v
 	bulletType = new ProjectileType();
 	bulletType->initialise(bulletSprite, 5, 600, 32, 32);
 
@@ -199,7 +201,7 @@ void SDLGame::handleEvents() {
 					if (i < MAX_BULLETS) {
 
 						bullets[i] = new BulletInstance();
-						bullets[i]->initialise(bulletType, mainPlayer->getPosition(), Float2(200.0f, 0.0f));
+						bullets[i]->initialise(bulletType, mainPlayer->getPosition(), Float2(0.0f, -200.0f));//-200.0f allows for the bullets to fire vertically upwards (+y axis)
 					}
 				}
 
@@ -418,7 +420,7 @@ void SDLGame::update() {
 void SDLGame::draw() {
 
 	// 1. Clear the screen
-	SDL_SetRenderDrawColor(gameRenderer, 0, 0, 0, 255); //RGBA
+	SDL_SetRenderDrawColor(gameRenderer, 0, 0, 255, 255); //RGBA
 	SDL_RenderClear(gameRenderer);
 
 

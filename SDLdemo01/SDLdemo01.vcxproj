@@ -170,6 +170,7 @@ xcopy /Y "$(SolutionDir)Libs\SDL2_image-2.0.5\lib\x86\*.dll" "$(SolutionDir)$(Co
     <ClInclude Include="ProjectileInstance.h" />
     <ClInclude Include="ProjectileType.h" />
     <ClInclude Include="SDLGame.h" />
+    <ClInclude Include="SpawnPosition.h" />
     <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>

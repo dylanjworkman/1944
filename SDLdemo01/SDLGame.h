@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "SpawnPosition.h"
 #include "KeyFlags.h"
 #include "ProjectileType.h"
 #include "BulletInstance.h"

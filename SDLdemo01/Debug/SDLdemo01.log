@@ -1,18 +1,16 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SDLdemo01.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Enemy.cpp
   SDLGame.cpp
-D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\SDLdemo01\SDLGame.cpp(17,19): warning C4150: deletion of pointer to incomplete type 'SDL_Window'; no destructor called
-D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2-2.0.10\include\SDL_video.h(90): message : see declaration of 'SDL_Window'
-D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\SDLdemo01\SDLGame.cpp(18,21): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
-D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2-2.0.10\include\SDL_render.h(122): message : see declaration of 'SDL_Renderer'
-  Generating Code...
-  SDLdemo01.vcxproj -> D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Debug\1944.exe
-  D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2-2.0.10\lib\x86\SDL2.dll
+D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\SDLdemo01\SDLGame.cpp(18,19): warning C4150: deletion of pointer to incomplete type 'SDL_Window'; no destructor called
+D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2-2.0.10\include\SDL_video.h(90): message : see declaration of 'SDL_Window'
+D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\SDLdemo01\SDLGame.cpp(19,21): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
+D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2-2.0.10\include\SDL_render.h(122): message : see declaration of 'SDL_Renderer'
+  SDLdemo01.vcxproj -> D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Debug\1944.exe
+  D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2-2.0.10\lib\x86\SDL2.dll
   1 File(s) copied
-  D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\libjpeg-9.dll
-  D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\libpng16-16.dll
-  D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\libtiff-5.dll
-  D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\libwebp-7.dll
-  D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\SDL2_image.dll
-  D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\zlib1.dll
+  D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\libjpeg-9.dll
+  D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\libpng16-16.dll
+  D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\libtiff-5.dll
+  D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\libwebp-7.dll
+  D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\SDL2_image.dll
+  D:\_Uni Work\CIS4008 Game Sys\Backups\SDLdemos - Recipes Solutions - 2\Libs\SDL2_image-2.0.5\lib\x86\zlib1.dll
   6 File(s) copied
