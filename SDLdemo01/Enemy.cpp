@@ -42,7 +42,7 @@ void Enemy::draw(SDL_Renderer* renderer) {
 	targetRect.w = int(w); // Recipe 5 - get size from attributes - no longer hard-coded values!
 	targetRect.h = int(h);
 
-	sprite->draw(renderer, &targetRect, 0.0f);
+	sprite->draw(renderer, &targetRect, 180.0f);
 
 	boundingBox.draw(renderer);
 }
@@ -65,6 +65,9 @@ void Enemy::addHealth(int amountToAdd) {
 	printf("health = %d\n", health);
 }
 
+float Enemy::getHealth() {
+	return health;
+}
 
 // Recipe 5 - Add AABB accessor so Game Object can get this information to test for collisions
 // Note: GRASP dictates the Enemy class knows nothing about the Game Object - and it doesn't - but any caller can ask for the bounding box

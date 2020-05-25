@@ -10,6 +10,7 @@ SDLGame::SDLGame() {
 	sprite = nullptr;
 	mainPlayer = nullptr;
 	enemySprite = nullptr;
+
 }
 
 
@@ -59,7 +60,6 @@ void SDLGame::initialise() {
 	// Use first (Default) renderer - this is usually Direct3D based
 	gameRenderer = SDL_CreateRenderer(gameWindow, 0, 0);
 
-
 	// -----------------------
 
 	//player sprite initialisation
@@ -67,14 +67,14 @@ void SDLGame::initialise() {
 	sprite->initialise(gameRenderer, "Assets\\Images\\playerSprite.png");
 	//v
 	mainPlayer = new Player();
-	mainPlayer->initialise(sprite, 375, 510, 100.0f);
+	mainPlayer->initialise(sprite, 375, 530, 100.0f);
 
 	//enemy sprite initialisation
 	sprite = new Sprite();
 	sprite->initialise(gameRenderer, "Assets\\Images\\enemySprite.png");
 	//v
 	enemySprite = new Enemy();
-	enemySprite->initialise(sprite, 600, 400);
+	enemySprite->initialise(sprite, 375, 10);
 
 	//bullet sprite initialisation
 	bulletSprite = new Sprite();
@@ -166,7 +166,7 @@ void SDLGame::handleEvents() {
 			}
 			break;
 
-		// Key released event
+		// Once key being pressed is stopped the input for specified key is cancelled
 		case SDL_KEYUP:
 
 			switch (event.key.keysym.sym)
@@ -211,16 +211,14 @@ void SDLGame::handleEvents() {
 			break;
 
 
-		//
-		// Recipe 4 - Controller input
-		//
-
+		
+		// xbox/generic gamepad input
 		case SDL_CONTROLLERDEVICEADDED:
 
 			deviceID = event.cdevice.which;
 			printf("Controller device %d added to system\n", deviceID);
 		
-			// Setup UP TO 4 controllers for this game!
+			// 4 controllers max
 			if (deviceID >= 0 && deviceID < 4) {
 
 				// Open controller for processing - deviceID indexes the ith controller on the system
@@ -246,7 +244,7 @@ void SDLGame::handleEvents() {
 		
 			break;
 
-
+			//gamepad axis motion, deadzone, and acceleration
 		case SDL_CONTROLLERAXISMOTION:
 
 			instanceID = event.caxis.which;
@@ -269,10 +267,6 @@ void SDLGame::handleEvents() {
 				case SDL_CONTROLLER_AXIS_LEFTY:
 					ly = (abs(event.caxis.value) < deadZone) ? 0 : event.caxis.value;
 					break;
-
-				case SDL_CONTROLLER_AXIS_RIGHTX:
-					rx = (abs(event.caxis.value) < deadZone) ? 0 : event.caxis.value;
-					break;
 				}
 			}
 			break;
@@ -292,7 +286,7 @@ void SDLGame::handleEvents() {
 				if (i < MAX_BULLETS) {
 
 					bullets[i] = new BulletInstance();
-					bullets[i]->initialise(bulletType, mainPlayer->getPosition(), Float2(200.0f, 0.0f));
+					bullets[i]->initialise(bulletType, mainPlayer->getPosition(), Float2(0.0f, -200.0f));
 				}
 			}
 
@@ -317,14 +311,12 @@ void SDLGame::handleEvents() {
 
 void SDLGame::update() {
 
-	// FOR NOW USE timeDeltaInSeconds DIRECTLY - NOT IDEAL AS ERROR CAN ACCUMULATE AS DISCUSSED IN THE LECTURE!
-
-	// Move mainPlayer based on key flags
+	//player movement keyflags
 	float xMovement = 0.0f;
 	float yMovement = 0.0f;
 	float rotation = 0.0f;
 
-	// Recipe 4 - Check if controller state updated - if not default to keyboard
+	//controller state
 	if (lx != 0 || ly != 0 || rx != 0) {
 		
 		xMovement = float(lx) / 75000.0f * 100.0f;
@@ -363,10 +355,12 @@ void SDLGame::update() {
 	}
 
 	mainPlayer->move(xMovement * timeDeltaInSeconds, yMovement * timeDeltaInSeconds);
-	mainPlayer->rotate(rotation * timeDeltaInSeconds); // Recipe 4 - rotate player based on joystick input
+	mainPlayer->rotate(rotation * timeDeltaInSeconds);
+
+	//enemy update
 
 
-	// Recipe 9 - Update bullets
+	//bullet update
 	for (int i = 0; i < MAX_BULLETS; i++) {
 
 		if (bullets[i]) {
@@ -380,8 +374,8 @@ void SDLGame::update() {
 	// Simple check between two objects
 	if (AABB::intersectAABB(mainPlayer->getBoundingBox(), enemySprite->getBoundingBox())) {
 
-		// A hit!
-		mainPlayer->addHealth(-0.1f);
+		//When player is hit/touches enemy (checks health condition)
+		mainPlayer->addHealth(-1.0f);
 
 		if (mainPlayer->getHealth() <= 0.0f) {
 
@@ -399,6 +393,11 @@ void SDLGame::update() {
 
 				printf("enemy hit!\n");
 				bullets[i]->hit(enemySprite);
+				
+				if (enemySprite->getHealth() <= 0.0f) {
+					
+				}
+					
 			}
 		}
 	}

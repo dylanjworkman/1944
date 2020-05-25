@@ -15,10 +15,10 @@ Sprite::~Sprite() {
 
 void Sprite::initialise(SDL_Renderer* renderer, const char *pathToImage) {
 
-	// Load image
+	//Load image, allows path to be set to a specified directory and image
 	SDL_Surface* image = IMG_Load(pathToImage);
 
-	// Create a texture object from the loaded image - we need the renderer we're going to use to draw this as well!
+	//Creates texture from loaded image
 	texture = SDL_CreateTextureFromSurface(renderer, image);
 
 	sourceRectangle.x = 0;

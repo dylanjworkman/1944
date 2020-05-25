@@ -71,23 +71,20 @@ Float2 Player::getPosition() {
 	return Float2(x, y);
 }
 
-
+//x, y axis player movement
 void Player::move(float xMovement, float yMovement) {
 
 	x += xMovement;
 	y += yMovement;
 
-	// Recipe 5 - need to move bounding volume too!
 	boundingBox.move(xMovement, yMovement);
 }
 
 
-// Recipe 4 - Add ability to rotate the player
+// Player Rotation: Controller Only
 void Player::rotate(float dTheta) {
 
 	orientation += dTheta;
-
-	// Note: Don't change AABB - this is ALWAYS axis aligned!
 }
 
 
@@ -98,7 +95,7 @@ AABB Player::getBoundingBox() {
 }
 
 
-// Recipe 7 - Update player's points / score by amountToAdd
+//Player points updater
 void Player::addPoints(int amountToAdd) {
 
 	points += amountToAdd;

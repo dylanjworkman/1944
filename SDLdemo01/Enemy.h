@@ -35,6 +35,7 @@ public:
 	void move(float xMovement, float yMovement);
 
 	void addHealth(int amountToAdd);
+	float getHealth();
 
 	AABB getBoundingBox();
 };
