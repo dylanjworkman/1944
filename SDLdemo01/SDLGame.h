@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Pickup.h"
 #include "SpawnPosition.h"
 #include "KeyFlags.h"
 #include "ProjectileType.h"
@@ -22,6 +23,10 @@ private:
 	Sprite*			sprite = nullptr;
 	Player*			mainPlayer = nullptr;
 
+	//enemy and pickups
+	Enemy* enemySprite = nullptr;
+	Pickup* pickupSprite = nullptr;
+
 	// Recipe 2 - Keyboard input
 	KeyFlags		keyState = 0;
 
@@ -36,9 +41,6 @@ private:
 	// Capture relevant joystick state in Game Object attributes...
 	Sint16			lx = 0, ly = 0; // Left controller joystick movement for mainPlayer
 	Sint16			rx = 0; // Right controller (x axis rotation) for mainPlayer
-	
-	// Recipe 5 & 9 - Something to collide with and shoot
-	Enemy*			enemySprite = nullptr;
 
 	// Recipe 9 - Bullets
 	static const int MAX_BULLETS = 1000;

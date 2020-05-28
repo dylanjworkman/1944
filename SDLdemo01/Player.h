@@ -11,7 +11,7 @@ private:
 	// Position
 	float			x;
 	float			y;
-	float			orientation; // Recipe 4 - player can now be rotated - store angle of rotation in degrees
+	float			orientation;
 
 	Sprite*			sprite = nullptr;
 
@@ -21,7 +21,7 @@ private:
 	AABB			boundingBox;
 	
 	// Recipe 7 - points
-	int				points;
+	int points = 0;
 
 	// Recipe 8 - health
 	float			health;
@@ -45,6 +45,7 @@ public:
 
 	// Recipe 7 - Update player's points / score by amountToAdd
 	void addPoints(int amountToAdd);
+	float getPoints();
 
 	// Recipe 8 - Update health by amountToAdd (if amountToAdd is negative the player's health goes down!)
 	void addHealth(float amountToAdd);

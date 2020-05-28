@@ -101,6 +101,9 @@ void Player::addPoints(int amountToAdd) {
 	points += amountToAdd;
 }
 
+float Player::getPoints() {
+	return points;
+}
 
 // Recipe 8 - Update health by amountToAdd (if amountToAdd is negative the player's health goes down!)
 void Player::addHealth(float amountToAdd) {

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Enemy.h"
-
+#include <array>
 
 Enemy::Enemy()
 {
@@ -31,6 +31,7 @@ void Enemy::initialise(Sprite* sprite, float initX, float initY) {
 }
 
 void Enemy::update() {
+	
 }
 
 void Enemy::draw(SDL_Renderer* renderer) {
@@ -39,7 +40,7 @@ void Enemy::draw(SDL_Renderer* renderer) {
 
 	targetRect.x = int(x);
 	targetRect.y = int(y);
-	targetRect.w = int(w); // Recipe 5 - get size from attributes - no longer hard-coded values!
+	targetRect.w = int(w);
 	targetRect.h = int(h);
 
 	sprite->draw(renderer, &targetRect, 180.0f);
@@ -62,7 +63,7 @@ void Enemy::move(float xMovement, float yMovement) {
 void Enemy::addHealth(int amountToAdd) {
 
 	health += amountToAdd;
-	printf("health = %d\n", health);
+	printf("hit! enemy health = %d\n", health);
 }
 
 float Enemy::getHealth() {

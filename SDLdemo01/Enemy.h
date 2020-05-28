@@ -5,21 +5,24 @@
 #include "Sprite.h"
 #include "Float2.h"
 #include "AABB.h"
+#include "pch.h"
 
 class Enemy
 {
 private:
 
-	// Position
-	float			x;
-	float			y;
+	Sprite* sprite = nullptr;
 
-	Sprite*			sprite;
+	int id = -1;
 
-	// Bounding box
-	float			w;
-	float			h;
-	AABB			boundingBox;
+	//move
+	float x = 0.0f;
+	float y = 0.0f;
+
+	//bounding box
+	float w = 0.0f;
+	float h = 0.0f;
+	AABB boundingBox;
 
 	// Enemy health
 	int				health = 100;

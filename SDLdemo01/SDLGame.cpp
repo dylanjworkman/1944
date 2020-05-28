@@ -3,19 +3,20 @@
 
 
 SDLGame::SDLGame() {
-	// Replication - this is done in the header!
+	//Construct (allocates memory)
 	gameWindow = nullptr;
 	gameRenderer = nullptr;
 
 	sprite = nullptr;
 	mainPlayer = nullptr;
 	enemySprite = nullptr;
+	pickupSprite = nullptr;
 
 }
 
 
 SDLGame::~SDLGame() {
-	// But if we allocated that memory ...
+	//Deconstruct (wipes allocated memory)
 	delete gameWindow;
 	delete gameRenderer;
 
@@ -23,8 +24,9 @@ SDLGame::~SDLGame() {
 	delete mainPlayer;
 	delete enemySprite;
 	delete bulletSprite;
+	delete pickupSprite;
 }
-
+//start of initialisation
 void SDLGame::initialise() {
 
 	const int SDL_OKAY = 0;
@@ -76,6 +78,13 @@ void SDLGame::initialise() {
 	enemySprite = new Enemy();
 	enemySprite->initialise(sprite, 375, 10);
 
+	sprite = new Sprite();
+	sprite->initialise(gameRenderer, "Assets\\Images\\pickup.png");
+	//v
+	pickupSprite = new Pickup();
+	pickupSprite->initialise(sprite, 150, 500);
+
+
 	//bullet sprite initialisation
 	bulletSprite = new Sprite();
 	bulletSprite->initialise(gameRenderer, "Assets\\Images\\bullet.png");
@@ -90,8 +99,10 @@ void SDLGame::initialise() {
 
 	// Add other initialisation code here...
 
-}
 
+}//end of initialisation
+
+//start of gameloop
 void SDLGame::runGameLoop() {
 
 	gameRunning = true;
@@ -368,18 +379,17 @@ void SDLGame::update() {
 		}
 	}
 
-
-	// Recipe 5 - Check collisions
+	//collision checks
 
 	// Simple check between two objects
 	if (AABB::intersectAABB(mainPlayer->getBoundingBox(), enemySprite->getBoundingBox())) {
 
 		//When player is hit/touches enemy (checks health condition)
-		mainPlayer->addHealth(-1.0f);
+		mainPlayer->addHealth(-100.0f); //when player touches enemy = instant death and closes SDL game
 
 		if (mainPlayer->getHealth() <= 0.0f) {
 
-			printf("GAME OVER!\n");
+			printf("GAME OVER! TRY AGAIN!\n");
 			gameRunning = false;
 		}
 	}
@@ -391,11 +401,12 @@ void SDLGame::update() {
 			
 			if (AABB::intersectAABB(bullets[i]->getBoundingBox(), enemySprite->getBoundingBox())) {
 
-				printf("enemy hit!\n");
+				//printf("enemy hit!\n");
 				bullets[i]->hit(enemySprite);
 				
 				if (enemySprite->getHealth() <= 0.0f) {
-					
+					printf("+1 points awarded to player!\n");
+					mainPlayer->addPoints(1.0f);
 				}
 					
 			}
@@ -407,7 +418,6 @@ void SDLGame::update() {
 
 		if (bullets[i] && bullets[i]->exceededRange()) {
 
-			printf("miss!\n");
 			delete bullets[i];
 			bullets[i] = nullptr;
 		}
@@ -418,20 +428,22 @@ void SDLGame::update() {
 
 void SDLGame::draw() {
 
-	// 1. Clear the screen
-	SDL_SetRenderDrawColor(gameRenderer, 0, 0, 255, 255); //RGBA
+	//Screen Clear
+	SDL_SetRenderDrawColor(gameRenderer, 0, 5, 255, 255); //RGBA
 	SDL_RenderClear(gameRenderer);
 
 
-	// 2. Draw the scene...
+	//Final steps of initialising SDL Game Window and Drawing Game Content
 
-	// Draw the main player
+	//draw player
 	mainPlayer->draw(gameRenderer);
 	
-	// Recipe 5 - instantiate something to collide against
+	//draw enemy
 	enemySprite->draw(gameRenderer);
 
-	// Recipe 9 - Draw bullets
+	pickupSprite->draw(gameRenderer);
+
+	//draw bullets
 	for (int i = 0; i < MAX_BULLETS; i++) {
 
 		if (bullets[i]) {
@@ -440,6 +452,7 @@ void SDLGame::draw() {
 	}
 
 
-	// 3. Present the current frame to the screen
+	//shows current frame on screen
 	SDL_RenderPresent(gameRenderer);
 }
+//end of gameloop
