@@ -4,9 +4,6 @@
 
 Player::Player()
 {
-	// Good practice
-	// if we try to use sprite before its allocated
-	// we'll get a null ptr error. 
 	this->sprite = nullptr;
 }
 
@@ -14,9 +11,6 @@ Player::Player()
 Player::~Player()
 {
 	delete sprite;
-	//Again good practice
-	//deleted objects can be used
-	//until they are overwritten!
 	this->sprite = nullptr;
 }
 
@@ -28,20 +22,20 @@ void Player::initialise(Sprite* sprite, float initX, float initY, float initHeal
 
 	this->sprite = sprite;
 
-	// Recipe 5 - to define bounding box we need size of sprite in game world!
+	//Sprite size
 	w = 64.0f;
 	h = 64.0f;
 
-	// Temp variables to calculate the centre point of the sprite given (x, y) are the top left
+	//calculates centre point of sprite
 	float cx = x + (w / 2.0f);
 	float cy = y + (h / 2.0f);
 	
-	boundingBox = AABB(cx, cy, w / 2.0f, h / 2.0f); // Store half w, h in the bounding box!
+	boundingBox = AABB(cx, cy, w / 2.0f, h / 2.0f); //centre points in bounding box for player sprite
 
-	// Recipe 7 - Points
+	//player points
 	points = 0;
 
-	// Recipe 8 - Health
+	//player health initialise
 	health = initHealth;
 }
 
@@ -61,7 +55,7 @@ void Player::draw(SDL_Renderer* renderer) {
 
 	sprite->draw(renderer, &targetRect, orientation);
 
-	// Recipe 5 - Draw AABB to show collision boundary
+	//draws bounding box into game
 	boundingBox.draw(renderer);
 }
 
@@ -81,38 +75,39 @@ void Player::move(float xMovement, float yMovement) {
 }
 
 
-// Player Rotation: Controller Only
+//Player Rotation: Controller Only
 void Player::rotate(float dTheta) {
 
 	orientation += dTheta;
 }
 
 
-// Recipe 5 - AABB accessor
+//bounding box accessor
 AABB Player::getBoundingBox() {
 
 	return boundingBox;
 }
 
 
-//Player points updater
+//player points updater
 void Player::addPoints(int amountToAdd) {
 
 	points += amountToAdd;
 }
 
+//checks for player points
 float Player::getPoints() {
 	return points;
 }
 
-// Recipe 8 - Update health by amountToAdd (if amountToAdd is negative the player's health goes down!)
+//player health on launch of game
 void Player::addHealth(float amountToAdd) {
 
 	health += amountToAdd;
 	printf("health = %f\n", health);
 }
 
-
+//returns information about player's current health
 float Player::getHealth() {
 
 	return health;

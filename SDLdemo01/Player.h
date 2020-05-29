@@ -15,15 +15,15 @@ private:
 
 	Sprite*			sprite = nullptr;
 
-	// Recipe 5 - new attributes for bounding volume...
+	//boundingbox volume
 	float			w;
 	float			h;
 	AABB			boundingBox;
 	
-	// Recipe 7 - points
+	//points
 	int points = 0;
 
-	// Recipe 8 - health
+	//health
 	float			health;
 
 public:
@@ -37,17 +37,17 @@ public:
 	Float2 getPosition();
 	void move(float xMovement, float yMovement);
 
-	// Recipe 4 - player can now be rotated
+	//player rotation
 	void rotate(float dTheta);
 
-	// Recipe 6 - Add AABB accessor
+	//AABB accessor
 	AABB getBoundingBox();
 
-	// Recipe 7 - Update player's points / score by amountToAdd
+	//add/update player points
 	void addPoints(int amountToAdd);
 	float getPoints();
 
-	// Recipe 8 - Update health by amountToAdd (if amountToAdd is negative the player's health goes down!)
+	//add/update player health
 	void addHealth(float amountToAdd);
 	float getHealth();
 };

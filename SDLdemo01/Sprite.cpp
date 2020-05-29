@@ -3,19 +3,18 @@
 
 
 Sprite::Sprite() {
-	// Duplicated form header
 	texture = nullptr;
 }
 
 
 Sprite::~Sprite() {
-	// Did someone say deallocation?
+	
 }
 
 
 void Sprite::initialise(SDL_Renderer* renderer, const char *pathToImage) {
 
-	//Load image, allows path to be set to a specified directory and image
+	//load image for sprite and locates specified sprite via finding path to image asset
 	SDL_Surface* image = IMG_Load(pathToImage);
 
 	//Creates texture from loaded image

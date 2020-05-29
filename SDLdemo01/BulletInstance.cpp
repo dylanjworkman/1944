@@ -18,7 +18,7 @@ void BulletInstance::initialise(ProjectileType* type, Float2 initPos, Float2 ini
 	this->pos = initPos;
 	this->vel = initVel;
 
-	// Temp variables to calculate the centre point of the sprite given (x, y) are the top left
+	//centre point calculation of bullet
 	float cx = pos.x + (type->getWidth() / 2.0f);
 	float cy = pos.y + (type->getHeight() / 2.0f);
 

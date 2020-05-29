@@ -1,7 +1,5 @@
 #pragma once
 
-// Recipe 5 - Axis Aligned Bounding Box for collision detection
-
 #include "Float2.h"
 
 struct AABB {
@@ -13,10 +11,10 @@ struct AABB {
 	}
 
 
-	// Centre point of AABB
+	//centre point of bounding box
 	Float2		pos;
 	
-	// Half-width and half-height of the AABB
+	//half width and half height of bounding box
 	float		w;
 	float		h;
 
@@ -42,13 +40,14 @@ struct AABB {
 		w = init_w;
 		h = init_h;
 	}
-
+	//moves the bounding box along with the sprite associated to it
 	void move(float dx, float dy) {
 
 		pos.x += dx;
 		pos.y += dy;
 	}
-	
+
+	//for drawing bounding box on gameWindow
 	void draw(SDL_Renderer* renderer) {
 
 		SDL_Rect targetRect;

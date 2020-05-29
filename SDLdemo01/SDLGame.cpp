@@ -1,7 +1,17 @@
 #include "pch.h"
 #include "SDLGame.h"
 
+//Contents:
+//SDLGame.cpp
+	//Initialisation
+		//	gameWindow()
+		//	gameRenderer()
+	//GameLoop
+		//	handleEvents()
+		//	update()
+		//	draw()
 
+//SDL = Simple Directmedia Layer
 SDLGame::SDLGame() {
 	//Construct (allocates memory)
 	gameWindow = nullptr;
@@ -26,23 +36,24 @@ SDLGame::~SDLGame() {
 	delete bulletSprite;
 	delete pickupSprite;
 }
-//start of initialisation
+
+//START OF INITIALISATION
 void SDLGame::initialise() {
 
 	const int SDL_OKAY = 0;
 
-	int sdlStatus = SDL_Init(SDL_INIT_EVERYTHING);
+	int sdlStatus = SDL_Init(SDL_INIT_EVERYTHING);//initialise everything for SDL
 
 	if (sdlStatus != SDL_OKAY)
 		throw "SDL init error";
 
 	gameWindow = SDL_CreateWindow(
-		"1944",
+		"1944",//Window name
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		800,
-		600,
-		SDL_WINDOW_SHOWN);
+		800,//horizontal resolution (x)
+		600,//vertical resolution (y)
+		SDL_WINDOW_SHOWN);//shows window on-screen
 
 	// Enumerate render drivers
 	int n = SDL_GetNumRenderDrivers();
@@ -53,16 +64,14 @@ void SDLGame::initialise() {
 
 		SDL_RendererInfo renderInfo;
 
-		if (SDL_GetRenderDriverInfo(i, &renderInfo) == 0) { // 0 means success
+		if (SDL_GetRenderDriverInfo(i, &renderInfo) == 0) { // 0 = success
 
 			printf("Renderer %d : %s\n", i, renderInfo.name);
 		}
 	}
 
-	// Use first (Default) renderer - this is usually Direct3D based
+	// renders gameWindow 
 	gameRenderer = SDL_CreateRenderer(gameWindow, 0, 0);
-
-	// -----------------------
 
 	//player sprite initialisation
 	sprite = new Sprite();
@@ -77,13 +86,15 @@ void SDLGame::initialise() {
 	//v
 	enemySprite = new Enemy();
 	enemySprite->initialise(sprite, 375, 10);
+	//ATTEMPTED in enemy classes and headers to create an array that would allow multiple enemies to be rendered, updated, and drawn into the SDL game window
+	// however after hours of testing could not find an efficient solution
 
+	//pickup sprite initialisation
 	sprite = new Sprite();
 	sprite->initialise(gameRenderer, "Assets\\Images\\pickup.png");
 	//v
 	pickupSprite = new Pickup();
 	pickupSprite->initialise(sprite, 150, 500);
-
 
 	//bullet sprite initialisation
 	bulletSprite = new Sprite();
@@ -97,21 +108,18 @@ void SDLGame::initialise() {
 		bullets[i] = nullptr;
 	}
 
-	// Add other initialisation code here...
+	//additional initialisation code goes HERE!
 
+}//END OF INITIALISATION
 
-}//end of initialisation
-
-//start of gameloop
+//START OF GAMELOOP
 void SDLGame::runGameLoop() {
 
 	gameRunning = true;
 
 	while (gameRunning) {
-
-		// Recipe 3 - Update timing / clock
 		
-		// Calculate time elapsed
+		//Calculate time elapsed
 		currentTimeIndex = SDL_GetTicks();
 		timeDelta = currentTimeIndex - prevTimeIndex;
 		timeDeltaInSeconds = float(timeDelta) / 1000.0f;
@@ -119,8 +127,7 @@ void SDLGame::runGameLoop() {
 		// Store current time index into prevTimeIndex for next frame
 		prevTimeIndex = currentTimeIndex;
 
-		// --------------------
-
+		//key sections of game loop
 		handleEvents();
 		update();
 		draw();
@@ -130,8 +137,6 @@ void SDLGame::runGameLoop() {
 void SDLGame::handleEvents() {
 
 	SDL_Event event;
-
-	// Recipe 4 - device and instance id variables for controller connections / removal
 	Sint32 deviceID;
 	Sint32 instanceID;
 
@@ -177,7 +182,7 @@ void SDLGame::handleEvents() {
 			}
 			break;
 
-		// Once key being pressed is stopped the input for specified key is cancelled
+		//Once key being pressed is stopped the input for specified key is cancelled
 		case SDL_KEYUP:
 
 			switch (event.key.keysym.sym)
@@ -210,37 +215,34 @@ void SDLGame::handleEvents() {
 					}
 
 					if (i < MAX_BULLETS) {
-
+						//creates new bullet for the player to fire upon keypress (SPACEBAR)
 						bullets[i] = new BulletInstance();
 						bullets[i]->initialise(bulletType, mainPlayer->getPosition(), Float2(0.0f, -200.0f));//-200.0f allows for the bullets to fire vertically upwards (+y axis)
 					}
 				}
-
 				break;
 			}
-
 			break;
 
 
 		
-		// xbox/generic gamepad input
+		//xbox and generic gamepad input (USE DS4 WINDOWS for Dualshock 4 input)
 		case SDL_CONTROLLERDEVICEADDED:
 
+			//checks if gamepad device is connected
 			deviceID = event.cdevice.which;
 			printf("Controller device %d added to system\n", deviceID);
 		
-			// 4 controllers max
+			//4 controllers maximum
 			if (deviceID >= 0 && deviceID < 4) {
-
-				// Open controller for processing - deviceID indexes the ith controller on the system
 				controllers[deviceID] = SDL_GameControllerOpen(deviceID);
 			}
 			break;
 
 		case SDL_CONTROLLERDEVICEREMOVED:
 
+			//checks if gamepad device is disconnected
 			instanceID = event.cdevice.which;
-
 			printf("Controller instance_id %d removed\n", instanceID);
 		
 			if (1) {
@@ -252,7 +254,6 @@ void SDLGame::handleEvents() {
 					SDL_GameControllerClose(controller);
 				}
 			}
-		
 			break;
 
 			//gamepad axis motion, deadzone, and acceleration
@@ -265,12 +266,11 @@ void SDLGame::handleEvents() {
 				// mainPlayer only updated by controller with instanceID = 0
 				Uint8 axisID = event.caxis.axis;
 
-				// Implement "Dead Zone" of 7849 to avoid analogue noise creating suprious movement
+				//DeadZone (KEEP AT 7849)
 				const Sint16 deadZone = 7849;
 
 				switch (axisID) {
 
-					
 				case SDL_CONTROLLER_AXIS_LEFTX:
 					lx = (abs(event.caxis.value) < deadZone) ? 0 : event.caxis.value;
 					break;
@@ -288,19 +288,18 @@ void SDLGame::handleEvents() {
 
 			if (instanceID == 0) {
 
-				// Find first "free" bullet
+				//Find first "free" bullet
 				int i = 0;
 				while (bullets[i] != nullptr && i < MAX_BULLETS) {
 					i++;
 				}
 
 				if (i < MAX_BULLETS) {
-
+					//creates new bullet for the player to fire upon buttonpress (general gamepad buttons X, A, B, Y or Square, Cross, Circle, Triangle)
 					bullets[i] = new BulletInstance();
 					bullets[i]->initialise(bulletType, mainPlayer->getPosition(), Float2(0.0f, -200.0f));
 				}
 			}
-
 			break;
 
 		case SDL_CONTROLLERBUTTONUP:
@@ -315,11 +314,9 @@ void SDLGame::handleEvents() {
 			break;
 		}
 	}
-
-	
 }
 
-
+//start of gameUpdate()
 void SDLGame::update() {
 
 	//player movement keyflags
@@ -337,16 +334,16 @@ void SDLGame::update() {
 	else {
 
 		if (keyState & Keys::Left)
-			xMovement = -100.0f;
+			xMovement = -200.0f;
 		else if (keyState & Keys::Right)
-			xMovement = 100.0f;
+			xMovement = 200.0f;
 
 		if (keyState & Keys::Up)
-			yMovement = -100.0f;
+			yMovement = -200.0f;
 		else if (keyState & Keys::Down)
-			yMovement = 100.0f;
+			yMovement = 200.0f;
 
-		// Ensure length of direction vector is consistent for axis-aligned and diagonal movement
+		//Ensure length of direction vector is consistent for axis-aligned and diagonal movement
 		float dx = float(xMovement);
 		float dy = float(yMovement);
 
@@ -358,7 +355,7 @@ void SDLGame::update() {
 			dy = dy / dLength;
 
 			dx *= 100.0f;
-			dy *= 100.0f;
+			dy *= 150.0f;//made the y axis movement faster due to the vehicle being a form of aircraft 
 
 			xMovement = dx;
 			yMovement = dy;
@@ -369,7 +366,12 @@ void SDLGame::update() {
 	mainPlayer->rotate(rotation * timeDeltaInSeconds);
 
 	//enemy update
-
+	//float xMovement = 0.0f;
+	//float yMovement = 100.0f;
+	//enemySprite->move(xMovement * timeDeltaInSeconds, yMovement * timeDeltaInSeconds);
+	
+	//!!!!!!!!!!!
+	//attempt to make enemy move however code in the update works different to how the player moves, as the player uses keypress if statements whereas the enemy should move on its own
 
 	//bullet update
 	for (int i = 0; i < MAX_BULLETS; i++) {
@@ -398,7 +400,6 @@ void SDLGame::update() {
 	for (int i = 0; i < MAX_BULLETS; i++) {
 
 		if (bullets[i]) {
-			
 			if (AABB::intersectAABB(bullets[i]->getBoundingBox(), enemySprite->getBoundingBox())) {
 
 				//printf("enemy hit!\n");
@@ -407,6 +408,7 @@ void SDLGame::update() {
 				if (enemySprite->getHealth() <= 0.0f) {
 					printf("+1 points awarded to player!\n");
 					mainPlayer->addPoints(1.0f);
+					
 				}
 					
 			}
@@ -425,8 +427,11 @@ void SDLGame::update() {
 
 
 }
+//end of gameUpdate()
 
+//start of draw()
 void SDLGame::draw() {
+	//all game content will be drawn on to the gameWindow from here
 
 	//Screen Clear
 	SDL_SetRenderDrawColor(gameRenderer, 0, 5, 255, 255); //RGBA
@@ -450,9 +455,9 @@ void SDLGame::draw() {
 			bullets[i]->draw(gameRenderer);
 		}
 	}
-
-
 	//shows current frame on screen
 	SDL_RenderPresent(gameRenderer);
 }
-//end of gameloop
+//end of draw()
+
+//END OF GAMELOOP

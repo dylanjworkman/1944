@@ -1,10 +1,10 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SDLdemo01.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   SDLGame.cpp
-D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemo01\SDLGame.cpp(20,19): warning C4150: deletion of pointer to incomplete type 'SDL_Window'; no destructor called
+D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemo01\SDLGame.cpp(30,19): warning C4150: deletion of pointer to incomplete type 'SDL_Window'; no destructor called
 D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\Libs\SDL2-2.0.10\include\SDL_video.h(90): message : see declaration of 'SDL_Window'
-D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemo01\SDLGame.cpp(21,21): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
+D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemo01\SDLGame.cpp(31,21): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
 D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\Libs\SDL2-2.0.10\include\SDL_render.h(122): message : see declaration of 'SDL_Renderer'
-D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemo01\SDLGame.cpp(409,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\SDLdemo01\SDLGame.cpp(410,28): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   SDLdemo01.vcxproj -> D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\Debug\1944.exe
   D:\_Uni Work\CIS4008 Game Sys\Assignment\1944\Libs\SDL2-2.0.10\lib\x86\SDL2.dll
   1 File(s) copied

@@ -4,13 +4,14 @@
 #include <array>
 
 Pickup::Pickup() {
-
+	this->sprite = nullptr;
 }
 
 Pickup::~Pickup() {
-
+	delete sprite;
+	this->sprite = nullptr;
 }
-
+//initialise pickup sprite
 void Pickup::initialise(Sprite* sprite, float initX, float initY) {
 	this->sprite = sprite;
 	w = 64.0f;

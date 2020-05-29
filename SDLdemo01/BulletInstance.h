@@ -9,7 +9,7 @@ class BulletInstance {
 	ProjectileType*	type; // Provide access to sprite and damage
 
 	Float2			pos; // Position
-	Float2			vel; // Direction of travel (serves as velocity)
+	Float2			vel; // Direction of trave
 
 	float			distanceTravelled; // How far the bullet has travelled
 

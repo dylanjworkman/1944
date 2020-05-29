@@ -7,7 +7,7 @@
 
 class ProjectileType
 {
-	// Projectile sprite - what it looks like
+	//projectile/bullet sprite
 	Sprite*			sprite;
 
 	// Damage
@@ -16,7 +16,7 @@ class ProjectileType
 	// Range
 	float			range;
 
-	// Dimensions of projectile in game world
+	//projectile/bullet dimensions
 	float			w, h;
 
 public:

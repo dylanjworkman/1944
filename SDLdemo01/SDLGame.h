@@ -15,11 +15,11 @@ private:
 
 	bool gameRunning;
 
-	// The game object will own the window and renderer objects
+	//SDL game window and renderer
 	SDL_Window*		gameWindow = nullptr;
 	SDL_Renderer*	gameRenderer = nullptr;
 
-	// Sprite for in-game characters
+	//main player sprites
 	Sprite*			sprite = nullptr;
 	Player*			mainPlayer = nullptr;
 
@@ -27,22 +27,21 @@ private:
 	Enemy* enemySprite = nullptr;
 	Pickup* pickupSprite = nullptr;
 
-	// Recipe 2 - Keyboard input
+	//keyboard input/keyflags
 	KeyFlags		keyState = 0;
 
-	// Recipe 3 - Timing attributes
+	//timing (delta and time index)
 	uint32_t		currentTimeIndex, prevTimeIndex, timeDelta;
 	float			timeDeltaInSeconds;
 
-	// Recipe 4 - Player control using a controller
-	// For now, mainPlayer will use only controllers[0] when connected ie. First controller connected to the system
+	//main player/user gamepad controls (xbox 360/one input aka XINPUT)
 	SDL_GameController* controllers[4] = { nullptr, nullptr, nullptr, nullptr };
 	
-	// Capture relevant joystick state in Game Object attributes...
+	//joystick current state and events
 	Sint16			lx = 0, ly = 0; // Left controller joystick movement for mainPlayer
 	Sint16			rx = 0; // Right controller (x axis rotation) for mainPlayer
 
-	// Recipe 9 - Bullets
+	//Bullets/projectiles
 	static const int MAX_BULLETS = 1000;
 
 	Sprite* bulletSprite = nullptr;
@@ -51,7 +50,7 @@ private:
 	BulletInstance* bullets[MAX_BULLETS];
 
 
-	// Private API
+	//gameloop
 	void handleEvents();
 	void update();
 	void draw();

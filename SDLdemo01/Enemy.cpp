@@ -4,11 +4,14 @@
 
 Enemy::Enemy()
 {
+	this->sprite = nullptr;
 }
 
 
 Enemy::~Enemy()
 {
+	delete sprite;
+	this->sprite = nullptr;
 }
 
 
@@ -19,15 +22,15 @@ void Enemy::initialise(Sprite* sprite, float initX, float initY) {
 
 	this->sprite = sprite;
 
-	// Recipe 5 - to define bounding box we need size of sprite in game world!
+	//sprite size
 	w = 64.0f;
 	h = 64.0f;
 
-	// Temp variables to calculate the centre point of the sprite given (x, y) are the top left
+	//Temp variables to calculate the centre point of the sprite given (x, y) are the top left
 	float cx = x + (w / 2.0f);
 	float cy = y + (h / 2.0f);
 
-	boundingBox = AABB(cx, cy, w / 2.0f, h / 2.0f); // Store half w, h in the bounding box!
+	boundingBox = AABB(cx, cy, w / 2.0f, h / 2.0f); //Store half w, h in the bounding box!
 }
 
 void Enemy::update() {
@@ -54,24 +57,23 @@ void Enemy::move(float xMovement, float yMovement) {
 	x += xMovement;
 	y += yMovement;
 
-	// Recipe 5 - move bounding box too!
-	boundingBox.move(xMovement, yMovement);
+	boundingBox.move(xMovement, yMovement);//moves bounding box
 }
 
 
-// Recipe 9 - addHealth called when bullets hit with negative value for amountToAdd parameter
+//add health contents for the enemy sprite in-game
 void Enemy::addHealth(int amountToAdd) {
 
 	health += amountToAdd;
 	printf("hit! enemy health = %d\n", health);
 }
 
+//looks for enemy's current health status
 float Enemy::getHealth() {
 	return health;
 }
 
-// Recipe 5 - Add AABB accessor so Game Object can get this information to test for collisions
-// Note: GRASP dictates the Enemy class knows nothing about the Game Object - and it doesn't - but any caller can ask for the bounding box
+//checks for enemy sprite boundingbox 
 AABB Enemy::getBoundingBox() {
 
 	return boundingBox;
